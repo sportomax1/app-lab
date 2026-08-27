@@ -2,260 +2,256 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#2b0a3d" />
-  <title>App Lab DEV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#fff4d6" />
+  <title>Burger Hop</title>
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #190021 0%, #30104d 45%, #6a0dad 100%);
-      color: white;
+    :root{
+      --cream:#fff4d6;
+      --brown:#5a341d;
+      --red:#e84f35;
+      --yellow:#f6c945;
+      --mint:#bfe8cf;
+      --road:#4b4b55;
+      --grass:#9ed36a;
+      --white:#fff;
     }
-    button { font: inherit; cursor: pointer; }
-    .dev-strip {
-      background: #ffea00;
-      color: #1a1024;
-      font-weight: 950;
-      text-align: center;
-      padding: 14px 12px;
-      letter-spacing: .16em;
-      font-size: .9rem;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      box-shadow: 0 6px 20px rgba(0,0,0,.25);
-    }
-    .shell {
-      width: min(1120px, calc(100% - 28px));
-      margin: 0 auto;
-      padding: 28px 0 48px;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 26px;
-    }
-    .brand {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-    .logo {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      font-size: 30px;
-      background: #ff3b81;
-      border: 3px solid #fff;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    }
-    h1 { margin: 0; font-size: clamp(1.8rem, 4vw, 3rem); }
-    .sub { margin: 4px 0 0; color: #ddc8ff; }
-    .badge {
-      border: 2px solid #ffea00;
-      color: #ffea00;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: .8rem;
-      white-space: nowrap;
-    }
-    nav {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 24px;
-      scrollbar-width: none;
-    }
-    nav::-webkit-scrollbar { display: none; }
-    .tab {
-      border: 2px solid rgba(255,255,255,.35);
-      background: rgba(255,255,255,.08);
-      color: #fff;
-      padding: 11px 16px;
-      border-radius: 12px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-    .tab.active {
-      background: #ffea00;
-      color: #21102f;
-      border-color: #ffea00;
-    }
-    .panel { display: none; }
-    .panel.active { display: block; }
-    .hero {
-      border: 3px solid #ff3b81;
-      background: rgba(22, 4, 36, .7);
-      border-radius: 28px;
-      padding: clamp(26px, 5vw, 54px);
-      box-shadow: 0 24px 70px rgba(0,0,0,.35);
-      margin-bottom: 22px;
-    }
-    .hero h2 {
-      margin: 0;
-      font-size: clamp(3rem, 9vw, 7rem);
-      line-height: .9;
-      letter-spacing: -.06em;
-      color: #ffea00;
-      text-transform: uppercase;
-    }
-    .hero p {
-      margin: 22px 0 0;
-      max-width: 740px;
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: #eadcff;
-      line-height: 1.6;
-    }
-    .notice {
-      margin-top: 24px;
-      background: #ff3b81;
-      color: white;
-      border-radius: 18px;
-      padding: 18px 20px;
-      font-weight: 850;
-      font-size: 1.05rem;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 18px;
-    }
-    .card {
-      min-height: 190px;
-      border-radius: 22px;
-      padding: 22px;
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.25);
-      backdrop-filter: blur(12px);
-    }
-    .card .icon { font-size: 2.5rem; }
-    .card h3 { margin: 14px 0 8px; font-size: 1.25rem; }
-    .card p { margin: 0; color: #ddc8ff; line-height: 1.5; }
-    .big-button {
-      border: 0;
-      background: #ffea00;
-      color: #21102f;
-      font-weight: 950;
-      border-radius: 14px;
-      padding: 14px 20px;
-      margin-top: 20px;
-      box-shadow: 0 8px 0 #b79300;
-    }
-    .big-button:active { transform: translateY(4px); box-shadow: 0 4px 0 #b79300; }
-    .counter {
-      margin-top: 20px;
-      font-size: clamp(3rem, 9vw, 6rem);
-      font-weight: 950;
-      color: #ffea00;
-    }
-    footer {
-      text-align: center;
-      color: #cbb2e9;
-      margin-top: 38px;
-      font-size: .85rem;
-    }
-    @media (max-width: 760px) {
-      .grid { grid-template-columns: 1fr; }
-      header { align-items: flex-start; }
-      .badge { font-size: .7rem; }
-      .hero { border-radius: 20px; }
-    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--cream);color:var(--brown);overflow-x:hidden}
+    body{display:flex;justify-content:center;padding:18px}
+    .wrap{width:min(980px,100%)}
+    header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+    .title{display:flex;align-items:center;gap:12px}
+    .logo{font-size:42px}
+    h1{margin:0;font-size:clamp(2rem,5vw,3.5rem);line-height:.95;letter-spacing:-.05em}
+    .sub{margin:5px 0 0;color:#7a5a43;font-weight:650}
+    .hud{display:flex;gap:8px;flex-wrap:wrap}
+    .pill{background:#fff;border:2px solid #eadab6;border-radius:999px;padding:9px 13px;font-weight:850;box-shadow:0 4px 0 #eadab6}
+    .game-shell{background:#fff;border:3px solid #eadab6;border-radius:24px;padding:12px;box-shadow:0 16px 40px rgba(90,52,29,.14)}
+    canvas{display:block;width:100%;aspect-ratio:4/5;max-height:72vh;border-radius:16px;background:#bfe8cf;touch-action:none}
+    .controls{display:grid;grid-template-columns:70px 70px 70px;grid-template-areas:". up ." "left down right";justify-content:center;gap:8px;margin:14px auto 2px;user-select:none}
+    .ctrl{height:56px;border:none;border-radius:16px;background:#fff4d6;color:#5a341d;font-size:26px;font-weight:900;box-shadow:0 5px 0 #e4c58d;touch-action:manipulation}
+    .ctrl:active{transform:translateY(3px);box-shadow:0 2px 0 #e4c58d}
+    .up{grid-area:up}.left{grid-area:left}.down{grid-area:down}.right{grid-area:right}
+    .bar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+    .btn{border:none;border-radius:14px;padding:11px 16px;background:var(--red);color:#fff;font-weight:900;box-shadow:0 5px 0 #b73525}
+    .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #b73525}
+    .hint{font-size:.9rem;color:#7a5a43;font-weight:650}
+    @media (min-width:760px){canvas{aspect-ratio:16/10}.controls{display:none}}
   </style>
 </head>
 <body>
-  <div class="dev-strip">⚠ DEV BRANCH — NOT PRODUCTION ⚠</div>
-
-  <div class="shell">
+  <div class="wrap">
     <header>
-      <div class="brand">
-        <div class="logo">🧪</div>
+      <div class="title">
+        <div class="logo">🐸🍔</div>
         <div>
-          <h1>App Lab DEV</h1>
-          <p class="sub">Experimental build — intentionally loud.</p>
+          <h1>Burger Hop</h1>
+          <p class="sub">Cross the burger lanes. Grab the ice cream.</p>
         </div>
       </div>
-      <div class="badge">DEV BUILD</div>
+      <div class="hud">
+        <div class="pill">Score <span id="score">0</span></div>
+        <div class="pill">Lives <span id="lives">3</span></div>
+        <div class="pill">Level <span id="level">1</span></div>
+      </div>
     </header>
 
-    <nav>
-      <button class="tab active" data-tab="home">DEV HOME</button>
-      <button class="tab" data-tab="stuff">STUFF</button>
-      <button class="tab" data-tab="test">TEST AREA</button>
-    </nav>
-
-    <main>
-      <section id="home" class="panel active">
-        <div class="hero">
-          <h2>Totally Different.</h2>
-          <p>This page is intentionally very different from the production version so you can instantly tell when you are looking at the <strong>dev branch</strong>.</p>
-          <div class="notice">If you see purple + pink + yellow and this huge DEV warning, you are NOT looking at main.</div>
-        </div>
-
-        <div class="grid">
-          <div class="card"><div class="icon">🚧</div><h3>Experimental</h3><p>This branch is where unfinished ideas can live safely.</p></div>
-          <div class="card"><div class="icon">🟣</div><h3>Purple Theme</h3><p>Deliberately opposite from the clean production styling.</p></div>
-          <div class="card"><div class="icon">💥</div><h3>Obvious Changes</h3><p>No subtlety here. This is specifically for branch testing.</p></div>
-        </div>
-      </section>
-
-      <section id="stuff" class="panel">
-        <div class="hero">
-          <h2>Random Stuff.</h2>
-          <p>Nothing important. Just another visibly different screen to prove navigation and branch deployment are working.</p>
-        </div>
-        <div class="grid">
-          <div class="card"><div class="icon">🎲</div><h3>Dice</h3><p id="diceText">Roll something ridiculous.</p><button class="big-button" onclick="rollDice()">ROLL D20</button></div>
-          <div class="card"><div class="icon">🐸</div><h3>Frog Module</h3><p>Production absolutely did not have a giant frog module.</p></div>
-          <div class="card"><div class="icon">🛸</div><h3>Space Module</h3><p>Also completely unnecessary. Perfect for a dev test.</p></div>
-        </div>
-      </section>
-
-      <section id="test" class="panel">
-        <div class="hero">
-          <h2>Button Test.</h2>
-          <p>Click the button. The number changes. That is the entire sophisticated experimental module.</p>
-          <button class="big-button" onclick="increment()">SMASH BUTTON</button>
-          <div id="counter" class="counter">0</div>
-        </div>
-      </section>
-    </main>
-
-    <footer>App Lab • DEV branch • Safe place to break things</footer>
+    <div class="game-shell">
+      <canvas id="game" width="800" height="1000" aria-label="Burger Hop game"></canvas>
+      <div class="controls" aria-label="Mobile controls">
+        <button class="ctrl up" data-dir="up">▲</button>
+        <button class="ctrl left" data-dir="left">◀</button>
+        <button class="ctrl down" data-dir="down">▼</button>
+        <button class="ctrl right" data-dir="right">▶</button>
+      </div>
+      <div class="bar">
+        <div class="hint">Desktop: arrow keys / WASD · Mobile: tap arrows</div>
+        <button class="btn" id="restart">Restart</button>
+      </div>
+    </div>
   </div>
 
   <script>
-    const tabs = document.querySelectorAll('.tab');
-    const panels = document.querySelectorAll('.panel');
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const levelEl = document.getElementById('level');
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
+    const cols = 10;
+    const rows = 12;
+    let cellW, cellH;
+    let score = 0;
+    let lives = 3;
+    let level = 1;
+    let running = true;
+    let lastTime = 0;
+
+    const frog = {x:4,y:11};
+    let hazards = [];
+    const laneRows = [3,4,5,7,8,9];
+    const laneDirs = [1,-1,1,-1,1,-1];
+
+    function resize(){
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      cellW = rect.width / cols;
+      cellH = rect.height / rows;
+    }
+
+    function resetFrog(){ frog.x = 4; frog.y = 11; }
+
+    function makeHazards(){
+      hazards = [];
+      laneRows.forEach((row,i)=>{
+        const count = 3 + (i%2);
+        for(let j=0;j<count;j++){
+          hazards.push({
+            row,
+            x:(j * (cols/count)) + Math.random()*1.2,
+            speed:(0.75 + i*0.12 + level*0.08) * laneDirs[i],
+            type:(i+j)%2===0?'burger':'fries'
+          });
+        }
+      });
+    }
+
+    function restart(){
+      score=0;lives=3;level=1;running=true;resetFrog();makeHazards();updateHud();
+    }
+
+    function updateHud(){
+      scoreEl.textContent=score;
+      livesEl.textContent=lives;
+      levelEl.textContent=level;
+    }
+
+    function move(dx,dy){
+      if(!running) return;
+      frog.x = Math.max(0, Math.min(cols-1, frog.x+dx));
+      frog.y = Math.max(0, Math.min(rows-1, frog.y+dy));
+      if(dy < 0) score += 10;
+      if(frog.y===0){
+        score += 250;
+        level++;
+        resetFrog();
+        makeHazards();
+        updateHud();
+      }
+    }
+
+    function hit(){
+      lives--;
+      updateHud();
+      resetFrog();
+      if(lives<=0) running=false;
+    }
+
+    function update(dt){
+      if(!running) return;
+      hazards.forEach(h=>{
+        h.x += h.speed*dt;
+        if(h.speed>0 && h.x>cols+1) h.x=-1.5;
+        if(h.speed<0 && h.x<-1.5) h.x=cols+1;
+      });
+
+      const frogCx=frog.x+0.5;
+      for(const h of hazards){
+        if(h.row===frog.y && Math.abs((h.x+0.55)-frogCx)<0.6){ hit(); break; }
+      }
+    }
+
+    function roundedRect(x,y,w,h,r,fill){
+      ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();
+    }
+
+    function drawLane(row){
+      const y=row*cellH;
+      ctx.fillStyle='#4b4b55';ctx.fillRect(0,y,canvas.getBoundingClientRect().width,cellH);
+      ctx.strokeStyle='rgba(255,255,255,.35)';ctx.lineWidth=2;ctx.setLineDash([18,18]);
+      ctx.beginPath();ctx.moveTo(0,y+cellH/2);ctx.lineTo(canvas.getBoundingClientRect().width,y+cellH/2);ctx.stroke();ctx.setLineDash([]);
+    }
+
+    function drawBurger(x,row,type){
+      const px=x*cellW, py=row*cellH;
+      const s=Math.min(cellW,cellH)*0.72;
+      const cx=px+cellW/2, cy=py+cellH/2;
+      ctx.font=`${s}px Apple Color Emoji, Segoe UI Emoji, sans-serif`;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(type==='burger'?'🍔':'🍟',cx,cy);
+    }
+
+    function drawFrog(){
+      const cx=(frog.x+.5)*cellW,cy=(frog.y+.5)*cellH;
+      const s=Math.min(cellW,cellH)*0.78;
+      ctx.font=`${s}px Apple Color Emoji, Segoe UI Emoji, sans-serif`;
+      ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('🐸',cx,cy);
+    }
+
+    function drawGoal(){
+      const rect=canvas.getBoundingClientRect();
+      ctx.fillStyle='#f8d9e8';ctx.fillRect(0,0,rect.width,cellH);
+      ctx.font=`${Math.min(cellW,cellH)*0.65}px Apple Color Emoji, Segoe UI Emoji, sans-serif`;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      for(let i=1;i<cols;i+=2) ctx.fillText('🍦',(i+.5)*cellW,cellH/2);
+    }
+
+    function draw(){
+      const rect=canvas.getBoundingClientRect();
+      ctx.clearRect(0,0,rect.width,rect.height);
+      ctx.fillStyle='#9ed36a';ctx.fillRect(0,0,rect.width,rect.height);
+      drawGoal();
+      laneRows.forEach(drawLane);
+
+      ctx.fillStyle='#8bc95a';
+      [1,2,6,10,11].forEach(r=>ctx.fillRect(0,r*cellH,rect.width,cellH));
+
+      hazards.forEach(h=>drawBurger(h.x,h.row,h.type));
+      drawFrog();
+
+      if(!running){
+        ctx.fillStyle='rgba(53,30,17,.72)';ctx.fillRect(0,0,rect.width,rect.height);
+        ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.font='900 42px system-ui';ctx.fillText('GAME OVER',rect.width/2,rect.height/2-20);
+        ctx.font='700 18px system-ui';ctx.fillText('Tap Restart to try again',rect.width/2,rect.height/2+28);
+      }
+    }
+
+    function loop(ts){
+      const dt=Math.min((ts-lastTime)/1000,0.04)||0; lastTime=ts;
+      update(dt);draw();requestAnimationFrame(loop);
+    }
+
+    function handleKey(e){
+      const k=e.key.toLowerCase();
+      if(['arrowup','w'].includes(k)){e.preventDefault();move(0,-1)}
+      if(['arrowdown','s'].includes(k)){e.preventDefault();move(0,1)}
+      if(['arrowleft','a'].includes(k)){e.preventDefault();move(-1,0)}
+      if(['arrowright','d'].includes(k)){e.preventDefault();move(1,0)}
+    }
+
+    document.addEventListener('keydown',handleKey);
+    document.querySelectorAll('.ctrl').forEach(btn=>{
+      btn.addEventListener('pointerdown',e=>{
+        e.preventDefault();
+        const d=btn.dataset.dir;
+        if(d==='up')move(0,-1);
+        if(d==='down')move(0,1);
+        if(d==='left')move(-1,0);
+        if(d==='right')move(1,0);
       });
     });
+    document.getElementById('restart').addEventListener('click',restart);
+    window.addEventListener('resize',resize);
 
-    function rollDice() {
-      document.getElementById('diceText').textContent = 'You rolled: ' + (Math.floor(Math.random() * 20) + 1);
-    }
-
-    let count = 0;
-    function increment() {
-      count++;
-      document.getElementById('counter').textContent = count;
-    }
+    resize();
+    makeHazards();
+    updateHud();
+    requestAnimationFrame(loop);
   </script>
-  <!-- force-pages-redeploy: 2026-08-27 -->
 </body>
 </html>
