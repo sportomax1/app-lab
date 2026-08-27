@@ -60,6 +60,6 @@ function draw(){ctx.clearRect(0,0,W,H);for(const s of stars){ctx.globalAlpha=s.a
 let last=0;function loop(t){if(!running)return;const dt=Math.min(.033,(t-last)/1000||0);last=t;update(dt);draw();requestAnimationFrame(loop)}
 window.addEventListener('keydown',e=>{keys[e.key]=true;if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault()});window.addEventListener('keyup',e=>keys[e.key]=false);document.querySelectorAll('[data-key]').forEach(btn=>{const k=btn.dataset.key;const on=e=>{e.preventDefault();keys[k]=true;if(k==='shoot')shoot()};const off=e=>{e.preventDefault();keys[k]=false};btn.addEventListener('pointerdown',on);btn.addEventListener('pointerup',off);btn.addEventListener('pointercancel',off);btn.addEventListener('pointerleave',off)});startBtn.addEventListener('click',reset);draw();
 </script>
-<!-- vercel branch trigger -->
+<!-- netlify branch deploy trigger 2026-08-27 -->
 </body>
 </html>
