@@ -1,13 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/dev", "destination": "https://app-lab-git-dev-kevins-projects-3ccf05a5.vercel.app/" },
-    { "source": "/dev/:path*", "destination": "https://app-lab-git-dev-kevins-projects-3ccf05a5.vercel.app/:path*" },
-    { "source": "/test", "destination": "https://app-lab-git-test-kevins-projects-3ccf05a5.vercel.app/" },
-    { "source": "/test/:path*", "destination": "https://app-lab-git-test-kevins-projects-3ccf05a5.vercel.app/:path*" },
-    { "source": "/prod", "destination": "https://app-lab-git-prod-kevins-projects-3ccf05a5.vercel.app/" },
-    { "source": "/prod/:path*", "destination": "https://app-lab-git-prod-kevins-projects-3ccf05a5.vercel.app/:path*" },
-    { "source": "/sandbox", "destination": "https://app-lab-git-sandbox-kevins-projects-3ccf05a5.vercel.app/" },
-    { "source": "/sandbox/:path*", "destination": "https://app-lab-git-sandbox-kevins-projects-3ccf05a5.vercel.app/:path*" }
+    { "source": "/dev", "destination": "/api/branch?branch=dev" },
+    { "source": "/test", "destination": "/api/branch?branch=test" },
+    { "source": "/prod", "destination": "/api/branch?branch=prod" },
+    { "source": "/sandbox", "destination": "/api/branch?branch=sandbox" }
   ]
 }
