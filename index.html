@@ -3,646 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f172a" />
-  <title>App Lab</title>
+  <meta name="theme-color" content="#020617" />
+  <title>Neon Invaders</title>
   <style>
-    :root {
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --surface-2: #f1f5f9;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --accent: #2563eb;
-      --accent-soft: #dbeafe;
-      --success: #16a34a;
-      --danger: #dc2626;
-      --radius: 18px;
-      --shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-
-    .app-shell {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 22px 0 44px;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: var(--text);
-      color: white;
-      font-size: 24px;
-      box-shadow: var(--shadow);
-    }
-
-    h1 { margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); }
-    .subtitle { margin: 3px 0 0; color: var(--muted); font-size: 0.92rem; }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 0.85rem;
-      white-space: nowrap;
-    }
-
-    .status-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--success);
-    }
-
-    .tabs-wrap {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      backdrop-filter: blur(12px);
-      padding: 8px 0 14px;
-      margin-bottom: 12px;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .tabs::-webkit-scrollbar { display: none; }
-
-    .tab {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--muted);
-      padding: 10px 15px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      white-space: nowrap;
-    }
-
-    .tab.active {
-      background: var(--text);
-      color: white;
-      border-color: var(--text);
-    }
-
-    .panel { display: none; }
-    .panel.active { display: block; }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 18px;
-      margin: 12px 0 24px;
-    }
-
-    .hero-main, .hero-side, .card, .game-box, .weather-box, .tool-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-main { padding: 30px; }
-    .hero-main h2 { margin: 0 0 10px; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.04em; }
-    .hero-main p { color: var(--muted); max-width: 650px; line-height: 1.6; }
-
-    .hero-side {
-      padding: 22px;
-      display: grid;
-      gap: 12px;
-      align-content: center;
-    }
-
-    .mini-stat {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--surface-2);
-      padding: 13px 14px;
-      border-radius: 13px;
-    }
-    .mini-stat span { color: var(--muted); }
-
-    .section-title {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 12px;
-      margin: 20px 2px 12px;
-    }
-    .section-title h2 { margin: 0; font-size: 1.25rem; }
-    .section-title p { margin: 0; color: var(--muted); font-size: 0.88rem; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .card { padding: 18px; }
-    .card-icon { font-size: 1.8rem; margin-bottom: 16px; }
-    .card h3 { margin: 0 0 7px; }
-    .card p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
-
-    .button-row { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 16px; }
-    .btn {
-      border: 0;
-      border-radius: 11px;
-      padding: 10px 14px;
-      font-weight: 750;
-      background: var(--text);
-      color: white;
-    }
-    .btn.secondary { background: var(--surface-2); color: var(--text); }
-    .btn.accent { background: var(--accent); }
-
-    .game-box, .weather-box, .tool-box { padding: 22px; }
-
-    .reaction-game {
-      min-height: 280px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      border-radius: 16px;
-      background: var(--surface-2);
-      padding: 22px;
-      user-select: none;
-    }
-    .reaction-game.ready { background: #dcfce7; }
-    .reaction-game.waiting { background: #fef3c7; }
-
-    .scoreboard { display: flex; gap: 18px; justify-content: center; margin-top: 14px; color: var(--muted); }
-
-    .guess-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    input {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      padding: 12px 13px;
-      border-radius: 11px;
-      outline: none;
-    }
-    input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-
-    .weather-search {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 9px;
-      margin: 15px 0;
-    }
-
-    .weather-result {
-      min-height: 180px;
-      background: var(--surface-2);
-      border-radius: 15px;
-      padding: 20px;
-    }
-
-    .weather-main {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .temperature { font-size: clamp(2.7rem, 8vw, 5.5rem); font-weight: 800; letter-spacing: -0.06em; }
-    .weather-meta { color: var(--muted); line-height: 1.8; }
-
-    .clock {
-      font-size: clamp(3rem, 10vw, 7rem);
-      font-weight: 850;
-      letter-spacing: -0.07em;
-      text-align: center;
-      margin: 18px 0;
-    }
-
-    .dice-output { font-size: 4rem; text-align: center; min-height: 82px; }
-
-    .api-output {
-      background: #0f172a;
-      color: #dbeafe;
-      border-radius: 14px;
-      padding: 16px;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      min-height: 180px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.82rem;
-    }
-
-    .muted { color: var(--muted); }
-    .error { color: var(--danger); }
-
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.8rem;
-      margin-top: 34px;
-    }
-
-    @media (max-width: 820px) {
-      .hero { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .guess-layout { grid-template-columns: 1fr; }
-      .status { display: none; }
-    }
-
-    @media (max-width: 560px) {
-      .app-shell { width: min(100% - 20px, 1180px); padding-top: 14px; }
-      .logo { width: 40px; height: 40px; border-radius: 12px; }
-      .subtitle { display: none; }
-      .hero-main, .hero-side, .card, .game-box, .weather-box, .tool-box { border-radius: 15px; }
-      .hero-main { padding: 22px; }
-      .grid { grid-template-columns: 1fr; gap: 10px; }
-      .card { display: grid; grid-template-columns: auto 1fr; column-gap: 13px; padding: 15px; }
-      .card-icon { margin: 0; grid-row: 1 / 3; }
-      .card h3 { align-self: end; }
-      .card p { align-self: start; }
-      .weather-search { grid-template-columns: 1fr; }
-      .weather-main { align-items: flex-start; flex-direction: column; }
-      .tabs-wrap { margin-inline: -2px; }
-    }
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#020617;color:#e2e8f0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{display:grid;place-items:center;padding:16px}.wrap{width:min(960px,100%)}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap}.title{font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:clamp(1.2rem,3vw,2rem)}.hud{display:flex;gap:10px;flex-wrap:wrap}.pill{padding:8px 12px;border:1px solid #334155;border-radius:999px;background:#0f172a;font-weight:800}.game-shell{position:relative;border:1px solid #1e293b;border-radius:20px;overflow:hidden;background:#020617;box-shadow:0 20px 60px rgba(0,0,0,.45)}canvas{display:block;width:100%;height:auto;aspect-ratio:4/3;background:radial-gradient(circle at 50% 10%,#0f172a 0,#020617 55%,#000 100%)}.overlay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(2,6,23,.72);backdrop-filter:blur(4px);padding:24px;text-align:center}.overlay.hidden{display:none}.card{max-width:520px}.card h1{margin:0 0 10px;font-size:clamp(2rem,7vw,4rem);line-height:.95;color:#67e8f9;text-shadow:0 0 24px rgba(103,232,249,.45)}.card p{color:#cbd5e1;line-height:1.5}.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:900;background:#22d3ee;color:#082f49;cursor:pointer;margin-top:10px}.controls{display:grid;grid-template-columns:repeat(3,72px);gap:8px;justify-content:center;margin-top:14px}.controls button{height:54px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;border-radius:12px;font-size:1.35rem;font-weight:900;touch-action:manipulation}.controls .shoot{grid-column:1/4;background:#172554;color:#bfdbfe}.hint{text-align:center;color:#64748b;font-size:.86rem;margin-top:10px}@media(min-width:700px){.controls{display:none}}
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <header>
-      <div class="brand">
-        <div class="logo">🧪</div>
-        <div>
-          <h1>App Lab</h1>
-          <p class="subtitle">Tiny games, utilities, experiments & APIs.</p>
-        </div>
+  <div class="wrap">
+    <div class="top">
+      <div class="title">👾 Neon Invaders</div>
+      <div class="hud">
+        <div class="pill">Score: <span id="score">0</span></div>
+        <div class="pill">Lives: <span id="lives">3</span></div>
+        <div class="pill">Wave: <span id="wave">1</span></div>
       </div>
-      <div class="status"><span class="status-dot"></span> Browser lab online</div>
-    </header>
-
-    <div class="tabs-wrap">
-      <nav class="tabs" aria-label="App Lab sections">
-        <button class="tab active" data-tab="home">Home</button>
-        <button class="tab" data-tab="games">Games</button>
-        <button class="tab" data-tab="weather">Weather</button>
-        <button class="tab" data-tab="tools">Tools</button>
-        <button class="tab" data-tab="api">API Lab</button>
-      </nav>
     </div>
 
-    <main>
-      <section class="panel active" id="home">
-        <div class="hero">
-          <div class="hero-main">
-            <h2>One page.<br />Lots of experiments.</h2>
-            <p>App Lab is a lightweight playground for testing browser features, tiny games, public APIs, UI ideas and useful one-off tools — all in a single dependency-free HTML file.</p>
-            <div class="button-row">
-              <button class="btn accent" onclick="switchTab('games')">Play something</button>
-              <button class="btn secondary" onclick="switchTab('weather')">Check weather</button>
-            </div>
-          </div>
-          <div class="hero-side">
-            <div class="mini-stat"><span>Files</span><strong>1</strong></div>
-            <div class="mini-stat"><span>Dependencies</span><strong>0</strong></div>
-            <div class="mini-stat"><span>API keys required</span><strong>0</strong></div>
-            <div class="mini-stat"><span>Mobile friendly</span><strong>Yes</strong></div>
-          </div>
+    <div class="game-shell">
+      <canvas id="game" width="800" height="600"></canvas>
+      <div class="overlay" id="overlay">
+        <div class="card">
+          <h1>NEON INVADERS</h1>
+          <p>Move left and right, blast the alien formation, survive incoming fire, and clear increasingly fast waves.</p>
+          <p><strong>Desktop:</strong> ← → or A/D to move, Space to shoot.</p>
+          <button class="btn" id="startBtn">START GAME</button>
         </div>
+      </div>
+    </div>
 
-        <div class="section-title"><h2>What’s in the lab</h2><p>Pick a tab to explore.</p></div>
-        <div class="grid">
-          <div class="card"><div class="card-icon">🎮</div><h3>Games</h3><p>Reaction timer, number guessing and quick interactive experiments.</p></div>
-          <div class="card"><div class="card-icon">🌦️</div><h3>Weather</h3><p>Live weather data using Open-Meteo with city search and geolocation.</p></div>
-          <div class="card"><div class="card-icon">🛠️</div><h3>Tools</h3><p>Clock, dice roller, randomizer and other little browser utilities.</p></div>
-          <div class="card"><div class="card-icon">🔌</div><h3>API Lab</h3><p>Make a real public API call and inspect the JSON response.</p></div>
-          <div class="card"><div class="card-icon">📱</div><h3>Responsive</h3><p>Compact single-column mobile layout and roomier desktop grid.</p></div>
-          <div class="card"><div class="card-icon">🚀</div><h3>Static Hosting</h3><p>Ready for GitHub Pages, Netlify or Vercel without a build step.</p></div>
-        </div>
-      </section>
-
-      <section class="panel" id="games">
-        <div class="section-title"><h2>Games</h2><p>Small browser games with no dependencies.</p></div>
-        <div class="guess-layout">
-          <div class="game-box">
-            <h3>⚡ Reaction Test</h3>
-            <p class="muted">Start the test, wait for green, then tap as fast as possible.</p>
-            <div id="reactionArea" class="reaction-game" onclick="reactionClick()">
-              <div><strong id="reactionTitle">Tap Start</strong><p id="reactionText" class="muted">Your reaction time will appear here.</p></div>
-            </div>
-            <div class="button-row"><button class="btn" onclick="startReaction()">Start</button></div>
-            <div class="scoreboard"><span>Last: <strong id="lastReaction">—</strong></span><span>Best: <strong id="bestReaction">—</strong></span></div>
-          </div>
-
-          <div class="game-box">
-            <h3>🔢 Guess the Number</h3>
-            <p class="muted">I’m thinking of a number from 1–100.</p>
-            <input id="guessInput" type="number" min="1" max="100" placeholder="Enter a guess" />
-            <div class="button-row"><button class="btn" onclick="makeGuess()">Guess</button><button class="btn secondary" onclick="resetGuess()">New Number</button></div>
-            <p id="guessMessage" style="font-weight:700; margin-top:18px;">Make your first guess.</p>
-            <p class="muted">Attempts: <strong id="attempts">0</strong></p>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel" id="weather">
-        <div class="section-title"><h2>Weather</h2><p>Live data from Open-Meteo.</p></div>
-        <div class="weather-box">
-          <h3>🌦️ Current Conditions</h3>
-          <p class="muted">Search a city or use your device location. No API key required.</p>
-          <div class="weather-search">
-            <input id="cityInput" type="text" placeholder="City, e.g. Denver" onkeydown="if(event.key==='Enter') searchWeather()" />
-            <div class="button-row" style="margin:0">
-              <button class="btn accent" onclick="searchWeather()">Search</button>
-              <button class="btn secondary" onclick="useMyLocation()">Use my location</button>
-            </div>
-          </div>
-          <div id="weatherResult" class="weather-result">
-            <p class="muted">Search for a city to load current weather.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel" id="tools">
-        <div class="section-title"><h2>Tools</h2><p>Simple things that are surprisingly useful.</p></div>
-        <div class="grid">
-          <div class="tool-box" style="grid-column: span 2;">
-            <h3>🕒 Local Clock</h3>
-            <div id="clock" class="clock">--:--:--</div>
-            <p id="dateText" class="muted" style="text-align:center"></p>
-          </div>
-          <div class="tool-box">
-            <h3>🎲 Dice Roller</h3>
-            <div id="diceOutput" class="dice-output">⚄</div>
-            <div class="button-row"><button class="btn" onclick="rollDice()">Roll d6</button><button class="btn secondary" onclick="rollD20()">Roll d20</button></div>
-          </div>
-          <div class="tool-box">
-            <h3>🎯 Random Picker</h3>
-            <p class="muted">Separate choices with commas.</p>
-            <input id="pickerInput" value="Pizza, Tacos, Burgers, Sushi" />
-            <div class="button-row"><button class="btn" onclick="pickRandom()">Pick one</button></div>
-            <h2 id="pickerOutput">—</h2>
-          </div>
-          <div class="tool-box">
-            <h3>🔐 Password Generator</h3>
-            <p class="muted">Creates a 16-character password locally in your browser.</p>
-            <input id="passwordOutput" readonly placeholder="Generated password" />
-            <div class="button-row"><button class="btn" onclick="generatePassword()">Generate</button></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel" id="api">
-        <div class="section-title"><h2>API Lab</h2><p>Test a public endpoint directly from the browser.</p></div>
-        <div class="tool-box">
-          <h3>🔌 JSONPlaceholder Demo</h3>
-          <p class="muted">Fetch a random sample post from the public JSONPlaceholder API.</p>
-          <div class="button-row"><button class="btn accent" onclick="fetchRandomPost()">Call API</button></div>
-          <pre id="apiOutput" class="api-output">Click “Call API” to fetch live JSON.</pre>
-        </div>
-      </section>
-    </main>
-
-    <footer>App Lab · Single-file browser playground</footer>
+    <div class="controls">
+      <button data-key="left">◀</button><button disabled>🚀</button><button data-key="right">▶</button>
+      <button class="shoot" data-key="shoot">FIRE</button>
+    </div>
+    <div class="hint">Sandbox branch only • Space Invaders-style test build</div>
   </div>
 
-  <script>
-    const tabs = document.querySelectorAll('.tab');
-    const panels = document.querySelectorAll('.panel');
+<script>
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const scoreEl=document.getElementById('score'),livesEl=document.getElementById('lives'),waveEl=document.getElementById('wave'),overlay=document.getElementById('overlay'),startBtn=document.getElementById('startBtn');
+const W=canvas.width,H=canvas.height;
+let keys={},player,bullets,enemies,enemyBullets,stars,score,lives,wave,running,lastShot,enemyDir,enemySpeed,dropTimer;
 
-    function switchTab(id) {
-      tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.tab === id));
-      panels.forEach(panel => panel.classList.toggle('active', panel.id === id));
-      history.replaceState(null, '', '#' + id);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+function reset(){
+ score=0;lives=3;wave=1;running=true;lastShot=0;enemyDir=1;enemySpeed=28;dropTimer=0;
+ player={x:W/2-28,y:H-70,w:56,h:28,speed:320};bullets=[];enemyBullets=[];
+ stars=Array.from({length:90},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.3,a:Math.random()*.8+.2}));
+ spawnWave();syncHud();overlay.classList.add('hidden');requestAnimationFrame(loop);
+}
+function spawnWave(){
+ enemies=[];const rows=Math.min(5,3+Math.floor((wave-1)/2)),cols=9,gapX=58,gapY=44,startX=(W-(cols-1)*gapX)/2-18;
+ for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)enemies.push({x:startX+c*gapX,y:70+r*gapY,w:36,h:26,row:r,alive:true});
+ enemySpeed=28+wave*7;enemyDir=1;
+}
+function syncHud(){scoreEl.textContent=score;livesEl.textContent=lives;waveEl.textContent=wave}
+function shoot(){const now=performance.now();if(now-lastShot<260||!running)return;lastShot=now;bullets.push({x:player.x+player.w/2-2,y:player.y-10,w:4,h:14,speed:520})}
+function enemyShoot(){const alive=enemies.filter(e=>e.alive);if(!alive.length)return;const e=alive[Math.floor(Math.random()*alive.length)];enemyBullets.push({x:e.x+e.w/2-2,y:e.y+e.h,w:4,h:12,speed:210+wave*12})}
+function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
+function loseLife(){lives--;syncHud();enemyBullets=[];player.x=W/2-player.w/2;if(lives<=0)endGame('GAME OVER')}
+function endGame(text){running=false;overlay.classList.remove('hidden');overlay.querySelector('h1').textContent=text;overlay.querySelector('p').innerHTML=`Final score: <strong>${score}</strong> • Wave ${wave}`;startBtn.textContent='PLAY AGAIN'}
 
-    tabs.forEach(tab => tab.addEventListener('click', () => switchTab(tab.dataset.tab)));
+function update(dt){
+ if(keys.left||keys.ArrowLeft||keys.a)player.x-=player.speed*dt;
+ if(keys.right||keys.ArrowRight||keys.d)player.x+=player.speed*dt;
+ player.x=Math.max(12,Math.min(W-player.w-12,player.x));
+ if(keys.shoot||keys[' '])shoot();
+ bullets.forEach(b=>b.y-=b.speed*dt);enemyBullets.forEach(b=>b.y+=b.speed*dt);
+ bullets=bullets.filter(b=>b.y+b.h>0);enemyBullets=enemyBullets.filter(b=>b.y<H+20);
+ let edge=false;for(const e of enemies)if(e.alive){e.x+=enemyDir*enemySpeed*dt;if(e.x<12||e.x+e.w>W-12)edge=true}
+ if(edge){enemyDir*=-1;for(const e of enemies)if(e.alive){e.y+=16;e.x+=enemyDir*enemySpeed*dt*2}}
+ dropTimer+=dt;if(dropTimer>Math.max(.35,1.15-wave*.05)){dropTimer=0;enemyShoot()}
+ for(const b of bullets)for(const e of enemies)if(e.alive&&hit(b,e)){e.alive=false;b.y=-100;score+=10+e.row*5;syncHud();break}
+ for(const b of enemyBullets)if(hit(b,player)){b.y=H+100;loseLife();break}
+ if(enemies.some(e=>e.alive&&e.y+e.h>=player.y))endGame('INVASION COMPLETE');
+ if(enemies.length&&enemies.every(e=>!e.alive)){wave++;syncHud();spawnWave();enemyBullets=[]}
+}
+function drawShip(){ctx.save();ctx.translate(player.x,player.y);ctx.fillStyle='#22d3ee';ctx.shadowColor='#22d3ee';ctx.shadowBlur=18;ctx.fillRect(10,12,36,13);ctx.fillRect(22,2,12,10);ctx.fillRect(2,20,52,7);ctx.restore()}
+function drawEnemy(e){ctx.save();ctx.translate(e.x,e.y);const hue=e.row%2?'#a78bfa':'#f472b6';ctx.fillStyle=hue;ctx.shadowColor=hue;ctx.shadowBlur=14;ctx.fillRect(7,4,22,5);ctx.fillRect(3,9,30,9);ctx.fillRect(0,14,6,8);ctx.fillRect(30,14,6,8);ctx.fillRect(8,18,6,7);ctx.fillRect(22,18,6,7);ctx.fillStyle='#020617';ctx.fillRect(9,11,4,4);ctx.fillRect(23,11,4,4);ctx.restore()}
+function draw(){ctx.clearRect(0,0,W,H);for(const s of stars){ctx.globalAlpha=s.a;ctx.fillStyle='#fff';ctx.fillRect(s.x,s.y,s.r,s.r)}ctx.globalAlpha=1;drawShip();for(const e of enemies)if(e.alive)drawEnemy(e);ctx.fillStyle='#67e8f9';ctx.shadowColor='#67e8f9';ctx.shadowBlur=10;for(const b of bullets)ctx.fillRect(b.x,b.y,b.w,b.h);ctx.fillStyle='#fb7185';ctx.shadowColor='#fb7185';for(const b of enemyBullets)ctx.fillRect(b.x,b.y,b.w,b.h);ctx.shadowBlur=0}
+let last=0;function loop(t){if(!running)return;const dt=Math.min(.033,(t-last)/1000||0);last=t;update(dt);draw();requestAnimationFrame(loop)}
 
-    const hashTab = location.hash.replace('#', '');
-    if ([...panels].some(p => p.id === hashTab)) switchTab(hashTab);
-
-    // Reaction game
-    let reactionTimer = null;
-    let reactionStart = 0;
-    let reactionState = 'idle';
-    let bestReaction = Number(localStorage.getItem('appLabBestReaction')) || null;
-    if (bestReaction) document.getElementById('bestReaction').textContent = bestReaction + ' ms';
-
-    function startReaction() {
-      clearTimeout(reactionTimer);
-      reactionState = 'waiting';
-      const area = document.getElementById('reactionArea');
-      area.className = 'reaction-game waiting';
-      document.getElementById('reactionTitle').textContent = 'Wait for green…';
-      document.getElementById('reactionText').textContent = 'Don’t tap yet.';
-      reactionTimer = setTimeout(() => {
-        reactionState = 'ready';
-        reactionStart = performance.now();
-        area.className = 'reaction-game ready';
-        document.getElementById('reactionTitle').textContent = 'TAP!';
-        document.getElementById('reactionText').textContent = 'Now!';
-      }, 1200 + Math.random() * 2800);
-    }
-
-    function reactionClick() {
-      if (reactionState === 'waiting') {
-        clearTimeout(reactionTimer);
-        reactionState = 'idle';
-        document.getElementById('reactionArea').className = 'reaction-game';
-        document.getElementById('reactionTitle').textContent = 'Too soon!';
-        document.getElementById('reactionText').textContent = 'Press Start and try again.';
-      } else if (reactionState === 'ready') {
-        const elapsed = Math.round(performance.now() - reactionStart);
-        reactionState = 'idle';
-        document.getElementById('reactionArea').className = 'reaction-game';
-        document.getElementById('reactionTitle').textContent = elapsed + ' ms';
-        document.getElementById('reactionText').textContent = elapsed < 220 ? 'Fast!' : elapsed < 300 ? 'Nice reaction.' : 'Try again to beat it.';
-        document.getElementById('lastReaction').textContent = elapsed + ' ms';
-        if (!bestReaction || elapsed < bestReaction) {
-          bestReaction = elapsed;
-          localStorage.setItem('appLabBestReaction', bestReaction);
-          document.getElementById('bestReaction').textContent = bestReaction + ' ms';
-        }
-      }
-    }
-
-    // Number guess
-    let targetNumber = Math.floor(Math.random() * 100) + 1;
-    let guessAttempts = 0;
-
-    function makeGuess() {
-      const input = document.getElementById('guessInput');
-      const guess = Number(input.value);
-      const msg = document.getElementById('guessMessage');
-      if (!Number.isInteger(guess) || guess < 1 || guess > 100) {
-        msg.textContent = 'Enter a whole number from 1 to 100.';
-        return;
-      }
-      guessAttempts++;
-      document.getElementById('attempts').textContent = guessAttempts;
-      if (guess === targetNumber) msg.textContent = `🎉 Correct! ${targetNumber} in ${guessAttempts} guesses.`;
-      else if (guess < targetNumber) msg.textContent = '⬆️ Higher.';
-      else msg.textContent = '⬇️ Lower.';
-      input.select();
-    }
-
-    function resetGuess() {
-      targetNumber = Math.floor(Math.random() * 100) + 1;
-      guessAttempts = 0;
-      document.getElementById('attempts').textContent = '0';
-      document.getElementById('guessMessage').textContent = 'New number ready.';
-      document.getElementById('guessInput').value = '';
-    }
-
-    document.getElementById('guessInput').addEventListener('keydown', e => { if (e.key === 'Enter') makeGuess(); });
-
-    // Weather
-    const weatherCodes = {
-      0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
-      45: 'Fog', 48: 'Rime fog', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
-      61: 'Light rain', 63: 'Rain', 65: 'Heavy rain', 71: 'Light snow', 73: 'Snow',
-      75: 'Heavy snow', 80: 'Rain showers', 81: 'Rain showers', 82: 'Heavy showers',
-      95: 'Thunderstorm', 96: 'Thunderstorm + hail', 99: 'Thunderstorm + hail'
-    };
-
-    async function searchWeather() {
-      const city = document.getElementById('cityInput').value.trim();
-      if (!city) return showWeatherError('Enter a city first.');
-      setWeatherLoading(`Finding ${city}…`);
-      try {
-        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
-        const geoRes = await fetch(geoUrl);
-        const geo = await geoRes.json();
-        if (!geo.results?.length) throw new Error('City not found.');
-        const place = geo.results[0];
-        await loadWeather(place.latitude, place.longitude, `${place.name}${place.admin1 ? ', ' + place.admin1 : ''}`);
-      } catch (err) { showWeatherError(err.message || 'Weather request failed.'); }
-    }
-
-    function useMyLocation() {
-      if (!navigator.geolocation) return showWeatherError('Geolocation is not supported by this browser.');
-      setWeatherLoading('Getting your location…');
-      navigator.geolocation.getCurrentPosition(
-        pos => loadWeather(pos.coords.latitude, pos.coords.longitude, 'Your location'),
-        () => showWeatherError('Location access was denied or unavailable.'),
-        { enableHighAccuracy: false, timeout: 10000 }
-      );
-    }
-
-    async function loadWeather(lat, lon, label) {
-      try {
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Weather API returned an error.');
-        const data = await res.json();
-        const w = data.current;
-        document.getElementById('weatherResult').innerHTML = `
-          <div class="weather-main">
-            <div>
-              <div class="temperature">${Math.round(w.temperature_2m)}°</div>
-              <strong>${escapeHtml(label)}</strong>
-              <div class="muted">${weatherCodes[w.weather_code] || 'Current weather'}</div>
-            </div>
-            <div class="weather-meta">
-              Feels like <strong>${Math.round(w.apparent_temperature)}°F</strong><br>
-              Humidity <strong>${w.relative_humidity_2m}%</strong><br>
-              Wind <strong>${Math.round(w.wind_speed_10m)} mph</strong><br>
-              Updated <strong>${new Date(w.time).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}</strong>
-            </div>
-          </div>`;
-      } catch (err) { showWeatherError(err.message || 'Weather request failed.'); }
-    }
-
-    function setWeatherLoading(text) {
-      document.getElementById('weatherResult').innerHTML = `<p class="muted">${escapeHtml(text)}</p>`;
-    }
-    function showWeatherError(text) {
-      document.getElementById('weatherResult').innerHTML = `<p class="error">${escapeHtml(text)}</p>`;
-    }
-
-    // Tools
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').textContent = now.toLocaleTimeString();
-      document.getElementById('dateText').textContent = now.toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-
-    function rollDice() {
-      const faces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-      document.getElementById('diceOutput').textContent = faces[Math.floor(Math.random() * 6)];
-    }
-    function rollD20() {
-      document.getElementById('diceOutput').textContent = Math.floor(Math.random() * 20) + 1;
-    }
-    function pickRandom() {
-      const choices = document.getElementById('pickerInput').value.split(',').map(x => x.trim()).filter(Boolean);
-      document.getElementById('pickerOutput').textContent = choices.length ? choices[Math.floor(Math.random() * choices.length)] : 'Add choices';
-    }
-    function generatePassword() {
-      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*';
-      const bytes = new Uint32Array(16);
-      crypto.getRandomValues(bytes);
-      document.getElementById('passwordOutput').value = [...bytes].map(n => chars[n % chars.length]).join('');
-    }
-
-    // API demo
-    async function fetchRandomPost() {
-      const output = document.getElementById('apiOutput');
-      output.textContent = 'Loading…';
-      try {
-        const id = Math.floor(Math.random() * 100) + 1;
-        const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json = await res.json();
-        output.textContent = JSON.stringify(json, null, 2);
-      } catch (err) {
-        output.textContent = `API request failed: ${err.message}`;
-      }
-    }
-
-    function escapeHtml(value) {
-      return String(value).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
-    }
-  </script>
+window.addEventListener('keydown',e=>{keys[e.key]=true;if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault()});
+window.addEventListener('keyup',e=>keys[e.key]=false);
+document.querySelectorAll('[data-key]').forEach(btn=>{const k=btn.dataset.key;const on=e=>{e.preventDefault();keys[k]=true;if(k==='shoot')shoot()};const off=e=>{e.preventDefault();keys[k]=false};btn.addEventListener('pointerdown',on);btn.addEventListener('pointerup',off);btn.addEventListener('pointercancel',off);btn.addEventListener('pointerleave',off)});
+startBtn.addEventListener('click',reset);
+draw();
+</script>
 </body>
 </html>
